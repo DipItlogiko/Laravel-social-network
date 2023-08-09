@@ -17,12 +17,32 @@ use \App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 
 Route::post('/signup' , [UserController::class , "postSignUp"])->name('signup');
 Route::post('/signin' , [UserController::class  ,"postSignIn"])->name('signin');
 
-Route::get('/dashboard', [UserController::class , "getDashboard"])->name('dashboard');
+Route::get('/dashboard', [UserController::class , "getDashboard"])->name('dashboard')->middleware('auth');
 
+ 
+// Route::get('/' , function (){
+//     return view('welcome');
+// })->name('home');
+
+// Route::post('/signup', [
+//     'uses' => 'UserController@postSignUp',
+//     'as' => 'signup'
+// ]);
+
+// Route::post('/signin', [
+//     'uses' => 'UserController@postSignIn',
+//     'as' => 'signin'
+// ]);
+
+// Route::get('/dashboard', [
+//     'uses' => 'UserController@getDashboard',
+//     'as' => 'dashboard',
+//     'middleware' => 'auth' 
+// ]);
  
