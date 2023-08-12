@@ -9,10 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 { 
-    ////__getDashboard__//
-    public function getDashboard() {
-        return view('dashboard');        
-    }
 
     ////_____postSignUp__////
     public function postSignUp(Request $request){
@@ -50,9 +46,16 @@ class UserController extends Controller
         ]);
 
        if (Auth::attempt(['email' => $request['email']  , 'password'=> $request['password']  ])) {
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with(['message' => 'Signup Successfully' ]);
        }
 
        return redirect()->back();
+    }
+
+
+    ////__UserLogout__///
+    public function getLogout(){
+        Auth::logout();
+        return redirect()->route('home')->with([ 'message' => 'Logout Successfully!!!']);
     }
 }
