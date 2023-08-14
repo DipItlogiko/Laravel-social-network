@@ -30,7 +30,7 @@ $('.post').find('.interaction').find('.edit').on('click' ,function(event) {
 $('#modal-save').on('click' , function() {  ///// modal-save it's from dashboard.blade.php and it's an id as well.....
     $.ajax({
         method: 'POST',
-        url: url,
+        url: urlEdit,
         data: { body: $('#post-body').val(), postId: postId , _token: token } //// the token is comes from dashboard.blade.php
     })
 
@@ -42,4 +42,22 @@ $('#modal-save').on('click' , function() {  ///// modal-save it's from dashboard
         });
 });
 
- 
+$('.like').on('click' , function(event){   ////like class from dashboard.blade.php
+    event.preventDefault();
+
+    postId = event.target.parentNode.parentNode.dataset['postid'];
+    
+    var isLike=event.target.previousElementSibling == null ? true : false;
+    ////console.log(event.target.previousElementSibling);
+    ////console.log(isLike);
+
+    $.ajax({
+        method:'POST',
+        url: urlLike,
+        data: {islike: isLike , postId: postId,  _token: token}
+    })
+    
+      .done(function() {
+        /////change the page
+      });
+}) 

@@ -46,8 +46,8 @@ dashboard
                 </div>
 
                 <div class="interaction">
-                    <a href="#">Like</a>
-                    <a href="#">Dislike</a>
+                    <a href="#" class="like">Like</a> <!--go to app.js----->
+                    <a href="#" class="like">Dislike</a>
 
                     @if(Auth::user() == $post->user)
                     
@@ -99,7 +99,8 @@ dashboard
 
 <script>
   var token = '{{ Session::token() }}';
-  var url = '{{ route('edit') }}';
+  var urlEdit = '{{ route('edit') }}'; /////chack app.js file and edit route
+  var urlLike ='{{ route('like') }}';
 </script>
 
 @endsection 
