@@ -29,7 +29,7 @@ return [
     */
 
     'disks' => [
-
+// for save data or file on your local then you can use it
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
@@ -43,6 +43,8 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+
+        // s3 is an amazon service if you have then you can configure below fild and store your file 
 
         's3' => [
             'driver' => 's3',

@@ -6,6 +6,9 @@ namespace App\Http\Controllers;
 use App\Models\Userdip2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 { 
@@ -57,5 +60,40 @@ class UserController extends Controller
     public function getLogout(){
         Auth::logout();
         return redirect()->route('home')->with([ 'message' => 'Logout Successfully!!!']);
+    }
+
+
+
+    ////__Account__////
+    public function getAccount(){
+        return view('account' , [ 'user' => Auth::user() ]);
+    }
+
+
+    ////__Account Save Post__////
+    public function postSaveAccount(Request $request){
+        //__validation__//
+        $this->validate($request ,[
+            'first_name' => 'required|max:120'
+        ]);
+
+        $user = Auth::user();
+        $user->first_name = $request['first_name'];
+        $user->update();
+
+        $file = $request->file('image'); //////image is my account.blade.php files input name that's why i have written this name in the file() function
+        $filename = $request['first_name'] . '-' . $user->id . '.jpg'; /////my filename will be $request['first_name'] and it's mean '-'  space and $user->id and my file must be a jpg file and that's why i include '.jpg' here 
+    
+        if ($file) {
+            Storage::disk('local')->put($filename , File::get($file)); ///////go config folder filesystems.php
+        }
+
+        return redirect()->route('account');
+    }
+
+    ////__UserImage__////
+    public function getUserImage($filename){
+        $file = Storage::disk('local')->get($filename);
+        return new Response($file , 200);
     }
 }

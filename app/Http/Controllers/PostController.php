@@ -45,6 +45,26 @@ class PostController extends Controller
     }
 
 
+    public function postEditPost(Request $request){
+         
+        //////validation 
+        $this->validate($request ,[
+            'body' => 'required'
+        ]);
+
+        $post = Post::find($request['postId']); //////postId comes from app.js file 
+
+        if(Auth::user() != $post-> user){
+            return redirect()->back(); 
+        } 
+
+        $post->body = $request['body'];
+        $post->update();
+
+        return response()->json(["new_body" => $post->body],200);
+    }
+
+
     public function getDeletePost( $post_id ) {
         $post = Post::where("id" , $post_id)->first();
 
