@@ -40,6 +40,8 @@ Route::get('/post-delete/{post_id}' , [PostController::class , "getDeletePost"])
 Route::get('/logout' , [UserController::class , 'getLogout'])->name('logout');
 
 Route::post('/edit' , [PostController::class , 'postEditPost'])->name('edit');  
+
+Route::post('/like' , [PostController::class , 'postLikePost'])->name('like');
  
 
 

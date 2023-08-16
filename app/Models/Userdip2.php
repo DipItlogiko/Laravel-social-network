@@ -17,6 +17,6 @@ class Userdip2 extends Model implements Authenticatable
 
     public function likes()
     {
-        return $this->hasMany(Like::class);
+        return $this->hasMany(Like::class , 'user_id');
     }
 }

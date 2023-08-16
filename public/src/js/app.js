@@ -54,10 +54,20 @@ $('.like').on('click' , function(event){   ////like class from dashboard.blade.p
     $.ajax({
         method:'POST',
         url: urlLike,
-        data: {islike: isLike , postId: postId,  _token: token}
+        data: {
+            _token: token,
+            islike: isLike,
+            POST_ID: postId,
+        },
     })
     
       .done(function() {
-        /////change the page
+          event.target.innerText = isLike ? event.target.innerText == 'Like' ? 'You like this post' : 'Like' : event.target.innerText == 'Dislike' ? 'you don\'t like this post' : 'Dislike';
+         ///// user will not be able to like and dislike a post at a same time   
+          if (isLike) {
+            event.target.nextElementSibling.innerText = 'Dislike';
+          } else {
+            event.target.previousElementSibling.innerText = 'Like';
+          }
       });
 }) 
