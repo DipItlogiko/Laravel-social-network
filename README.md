@@ -2,4 +2,5 @@
 
 * Hide like or dislike button for own posts.
 * Hide account or logout links when not authenticated.
+* Restrict access to account or logout page or url when not authenticated.
  

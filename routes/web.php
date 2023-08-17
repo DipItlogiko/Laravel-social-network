@@ -27,7 +27,7 @@ Route::post('/signin' , [UserController::class  ,"postSignIn"])->name('signin');
 
 Route::get('/dashboard', [PostController::class , "getDashboard"])->name('dashboard')->middleware('auth');
 
-Route::get('/account' , [UserController::class , "getAccount"])->name('account');
+Route::get('/account' , [UserController::class , "getAccount"])->name('account')->middleware('auth');
 
 Route::post('/updateaccount' , [UserController::class , "postSaveAccount"])->name('accountsave');
 
@@ -37,7 +37,7 @@ Route::post('/createpost', [PostController::class , "postCreatePost"])->name('cr
 
 Route::get('/post-delete/{post_id}' , [PostController::class , "getDeletePost"])->name('post-delete')->middleware('auth');
 
-Route::get('/logout' , [UserController::class , 'getLogout'])->name('logout');
+Route::get('/logout' , [UserController::class , 'getLogout'])->name('logout')->middleware('auth');
 
 Route::post('/edit' , [PostController::class , 'postEditPost'])->name('edit');  
 
