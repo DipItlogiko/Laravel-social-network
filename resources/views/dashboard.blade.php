@@ -42,25 +42,24 @@ dashboard
                 <p> {{ $post->body }} </p>   <!-- ($post->body)  it's mean my body fild of post table  -->
                 
                 <div class="info">
-                    Post by {{ $post->user->first_name }} on {{ $post->created_at }}
+                   
+                  @if ($post->updated_at != $post->created_at)
+                    Updated by {{ $post->user->first_name }} on {{ $post->updated_at }}
+                  @else
+                    Created by {{ $post->user->first_name }} on {{ $post->created_at }}
+                  @endif
+                
                 </div>
 
                 <div class="interaction">
                    
-                    @if(Auth::user() == $post->user)
-                    
+                  @if(Auth::user() == $post->user)                    
                     <a href="#" class="edit">Edit</a>  <!--For make this edit button workable i have created a new folder in public/src/js and i have added a jquery cdn in master.blade.php file and i also have written this public/src/js script in master.blade.php------->
                     <a href="{{ route('post-delete' , ['post_id' => $post->id]) }}">Delete</a>
-                    
-                    @endif
-
-                    @if(Auth::user() != $post->user )
-                       
+                  @else                  
                     <a href="#" class="like">{{ Auth::user()->likes()->where('post_id' , $post->id)->first()  ?  Auth::user()->likes()->where('post_id' , $post->id)->first()->like == 1 ? 'you like this post' : 'Like'  : 'Like' }} </a> <!--go to app.js----->
                     <a href="#" class="like">{{ Auth::user()->likes()->where('post_id' , $post->id)->first()  ?  Auth::user()->likes()->where('post_id' , $post->id)->first()->like == 0 ? 'you don\'t like this post' : 'Dislike'  : 'Dislike' }}</a>
-
-
-                    @endif
+                  @endif
                     
                 </div>
             </article>

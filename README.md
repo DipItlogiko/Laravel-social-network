@@ -4,5 +4,6 @@
 * Hide account or logout links when not authenticated.
 * Restrict access to account or logout page or url when not authenticated.
 * Fix wrong sign in message.
+* Fix wrong create time in posts.
 
  

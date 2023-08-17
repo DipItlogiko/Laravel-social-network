@@ -62,7 +62,7 @@ class PostController extends Controller
         $post->body = $request['body'];
         $post->update();
 
-        return response()->json(["new_body" => $post->body],200);
+        return response()->json(["new_body" => $post->body , "new_date" => $post->updated_at],200);
     }
 
 

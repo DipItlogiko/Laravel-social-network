@@ -9,6 +9,8 @@ var postId=0;
 
 var postBodyElement = null;
 
+var postUpdate_At= null;
+
 
 $('.post').find('.interaction').find('.edit').on('click' ,function(event) {
     // console.log('it works!!'); 
@@ -16,6 +18,9 @@ $('.post').find('.interaction').find('.edit').on('click' ,function(event) {
 
     postBodyElement=event.target.parentNode.parentNode.childNodes[1];
     var postBody = postBodyElement.textContent;
+
+    postUpdate_At =event.target.parentNode.parentNode.childNodes[5];
+     
     
     postId = event.target.parentNode.parentNode.dataset['postid']; ////postid is comes from dashboard.blade.php
     ////////Debug---(under console.log you can apply one by one element and debug)----------------------------------------
@@ -37,6 +42,10 @@ $('#modal-save').on('click' , function() {  ///// modal-save it's from dashboard
        .done(function(msg) {
            $(postBodyElement).text(msg['new_body']); /////new_body is comes from postcontroller
            
+           const newDate = new Date(msg['new_date']); /////new_date is comes from postcontroller
+           const formattedDate = `${newDate.getFullYear()}-${(newDate.getMonth() + 1).toString().padStart(2, '0')}-${newDate.getDate().toString().padStart(2, '0')} ${newDate.getHours().toString().padStart(2, '0')}:${newDate.getMinutes().toString().padStart(2, '0')}:${newDate.getSeconds().toString().padStart(2, '0')}`;
+
+           $(postUpdate_At).text(`Updated on ${formattedDate}`); 
            $('#edit-modal').modal('hide');  ////this code will help us when we will edit post and the pop up will be autometically desapear
        
         });
