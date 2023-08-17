@@ -46,14 +46,20 @@ dashboard
                 </div>
 
                 <div class="interaction">
-                    <a href="#" class="like">{{ Auth::user()->likes()->where('post_id' , $post->id)->first()  ?  Auth::user()->likes()->where('post_id' , $post->id)->first()->like == 1 ? 'you like this post' : 'Like'  : 'Like' }} </a> <!--go to app.js----->
-                    <a href="#" class="like">{{ Auth::user()->likes()->where('post_id' , $post->id)->first()  ?  Auth::user()->likes()->where('post_id' , $post->id)->first()->like == 0 ? 'you don\'t like this post' : 'Dislike'  : 'Dislike' }}</a>
-
+                   
                     @if(Auth::user() == $post->user)
                     
                     <a href="#" class="edit">Edit</a>  <!--For make this edit button workable i have created a new folder in public/src/js and i have added a jquery cdn in master.blade.php file and i also have written this public/src/js script in master.blade.php------->
                     <a href="{{ route('post-delete' , ['post_id' => $post->id]) }}">Delete</a>
                     
+                    @endif
+
+                    @if(Auth::user() != $post->user )
+                       
+                    <a href="#" class="like">{{ Auth::user()->likes()->where('post_id' , $post->id)->first()  ?  Auth::user()->likes()->where('post_id' , $post->id)->first()->like == 1 ? 'you like this post' : 'Like'  : 'Like' }} </a> <!--go to app.js----->
+                    <a href="#" class="like">{{ Auth::user()->likes()->where('post_id' , $post->id)->first()  ?  Auth::user()->likes()->where('post_id' , $post->id)->first()->like == 0 ? 'you don\'t like this post' : 'Dislike'  : 'Dislike' }}</a>
+
+
                     @endif
                     
                 </div>
