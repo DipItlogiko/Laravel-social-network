@@ -36,7 +36,7 @@ class UserController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with([ 'message' => 'SignUp Successfully']);
     }
 
 
@@ -49,7 +49,7 @@ class UserController extends Controller
         ]);
 
        if (Auth::attempt(['email' => $request['email']  , 'password'=> $request['password']  ])) {
-        return redirect()->route('dashboard')->with(['message' => 'Signup Successfully' ]);
+        return redirect()->route('dashboard')->with(['message' => 'SignIn Successfully' ]);
        }
 
        return redirect()->back();
