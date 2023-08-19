@@ -1,7 +1,6 @@
 <!-- <h1>The dashboard</h1> 
 <p>{{ auth()->id() }}</p> -->
 
-
 @extends('test.master')
 
 @section('title')
@@ -35,18 +34,18 @@ dashboard
         <header>
             <h3>What other people say...</h3>
         </header>
-
-        @foreach($posts as $post)
+         <!-- $posts  is comes from PostController -->
+        @foreach($posts as $post) 
          
             <article class="post" data-postid="{{ $post->id }}">    
                 <p> {{ $post->body }} </p>   <!-- ($post->body)  it's mean my body fild of post table  -->
                 
                 <div class="info">
-                   
-                  @if ($post->updated_at != $post->created_at)
+                   <!-- the below code has one problem ..the problem is when i create a new post that time don't match with my local time to solve this problem go to config/app.php and 'timezone' => UTC, change it 'timezone' => 'Asia/Dhaka', it will work-->
+                  @if ($post->updated_at != $post->created_at) 
                     Updated by {{ $post->user->first_name }} on {{ $post->updated_at }}
                   @else
-                    Created by {{ $post->user->first_name }} on {{ $post->created_at }}
+                    Post by {{ $post->user->first_name }} on {{ $post->created_at }}
                   @endif
                 
                 </div>

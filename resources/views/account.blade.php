@@ -10,7 +10,7 @@
 <section class="row new-post">
         <div class="col-md-6 col-md-offset-3">
             <header><h3>Your Account</h3></header>
-            <form action="{{ route('accountsave') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('accountSave') }}" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="first_name">First Name</label>
                     <input type="text" name="first_name" class="form-control" value="{{ $user->first_name }}" id="first_name">

@@ -29,7 +29,7 @@ Route::get('/dashboard', [PostController::class , "getDashboard"])->name('dashbo
 
 Route::get('/account' , [UserController::class , "getAccount"])->name('account')->middleware('auth');
 
-Route::post('/updateaccount' , [UserController::class , "postSaveAccount"])->name('accountsave');
+Route::post('/updateaccount' , [UserController::class , "postSaveAccount"])->name('accountSave')->middleware('auth');
 
 Route::get('/userimage/{filename}' ,[UserController::class , "getUserImage"])->name('accountImage');
 

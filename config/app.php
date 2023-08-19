@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Dhaka', //////when i will create data it will save our localtime in our database table create_at field bydefault Laravel use UTC  timezone for timestamps stored in the database
 
     /*
     |--------------------------------------------------------------------------

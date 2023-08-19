@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /////Userdip2 is my base table and this table is under the Auth
 class Userdip2 extends Model implements Authenticatable
 {
-    use \Illuminate\Auth\Authenticatable; ////here i conneted my userdip2 table with Auth 
+    use \Illuminate\Auth\Authenticatable; ////here i conneted my userdip2 table with Auth and i have also written 'model' => App\Models\Userdip2::class, in config/auth.php
 
     public function posts()
     {
