@@ -82,8 +82,12 @@ class UserController extends Controller
         $user->update();
 
         $file = $request->file('image'); //////image is my account.blade.php files input name that's why i have written this name in the file() function
-        $filename = $request['first_name'] . '-' . $user->id . '.jpg'; /////my filename will be $request['first_name'] and it's mean '-'  space and $user->id and my file must be a jpg file and that's why i include '.jpg' here 
-    
+
+        /////if we generate our filename with user first name then we will face a problem(i have written the problem in account.blade.php) 
+        ////$filename = $request['first_name'] . '-' . $user->id . '.jpg'; /////my filename will be $request['first_name'] and it's mean '-'  space and $user->id and my file must be a jpg file and that's why i include '.jpg' here 
+        
+        $filename = $user->id . '.jpg';////Use user's ID for filename (it will solve your above problem) 
+
         if ($file) {
             Storage::disk('local')->put($filename , File::get($file)); ///////go config folder filesystems.php
         }

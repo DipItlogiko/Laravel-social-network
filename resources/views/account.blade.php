@@ -24,12 +24,23 @@
             </form>
         </div>
     </section>
-    @if (Storage::disk('local')->has($user->first_name . '-' . $user->id . '.jpg'))
+
+    <!--below commented code has logical error here they are  using the user's first name as part of the image file name. When you change the user's first name, the filename changes, and this causes the image to appear as though it's "gone." that's why we are unable to watch user image after changing user first name ---------------------------------->
+
+    <!-- @if (Storage::disk('local')->has($user->first_name . '-' . $user->id . '.jpg'))
         <section class="row new-post">
             <div class="col-md-6 col-md-offset-3">
                 <img src="{{ route('accountImage', ['filename' => $user->first_name . '-' . $user->id . '.jpg']) }}" alt="" class="img-responsive">
             </div>
         </section>
-    @endif
+    @endif -->
+
+    @if (Storage::disk('local')->has($user->id . '.jpg'))
+        <section class="row new-post">
+            <div class="col-md-6 col-md-offset-3">
+                <img src="{{ route('accountImage', ['filename' => $user->id . '.jpg']) }}" alt="" class="img-responsive">
+            </div>
+        </section>
+   @endif
 
 @endsection
