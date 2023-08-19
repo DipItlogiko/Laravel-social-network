@@ -13,4 +13,6 @@ when i create a new post that time don't match with my local time to solve this 
 
 the appropriate timezone identifier for your location. You can find a list of supported timezone identifiers in the PHP documentation:[Click_Here](https://www.php.net/manual/en/timezones.asia.php)
 
- 
+* Fix notification bar.
+
+Here i am just used bootstrap class in message.blade.php 
