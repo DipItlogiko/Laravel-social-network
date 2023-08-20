@@ -35,7 +35,7 @@ Route::get('/userimage/{filename}' ,[UserController::class , "getUserImage"])->n
 
 Route::post('/createpost', [PostController::class , "postCreatePost"])->name('createpost')->middleware('auth');
 
-Route::get('/post-delete/{post_id}' , [PostController::class , "getDeletePost"])->name('post-delete')->middleware('auth');
+Route::get('/post-delete/{post_id}' , [PostController::class , "getDeletePost"])->name('postDelete')->middleware('auth');
 
 Route::get('/logout' , [UserController::class , 'getLogout'])->name('logout')->middleware('auth');
 

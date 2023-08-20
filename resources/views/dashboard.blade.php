@@ -43,7 +43,7 @@ dashboard
                 <div class="info">
                    <!-- the below code has one problem ..the problem is when i create a new post that time don't match with my local time to solve this problem go to config/app.php and 'timezone' => UTC, change it 'timezone' => 'Asia/Dhaka', it will work-->
                   @if ($post->updated_at != $post->created_at) 
-                    Updated by {{ $post->user->first_name }} on {{ $post->updated_at }}
+                    Updated on {{ $post->updated_at }}
                   @else
                     Post by {{ $post->user->first_name }} on {{ $post->created_at }}
                   @endif
@@ -54,7 +54,19 @@ dashboard
                    
                   @if(Auth::user() == $post->user)                    
                     <a href="#" class="edit">Edit</a>  <!--For make this edit button workable i have created a new folder in public/src/js and i have added a jquery cdn in master.blade.php file and i also have written this public/src/js script in master.blade.php------->
-                    <a href="{{ route('post-delete' , ['post_id' => $post->id]) }}">Delete</a>
+                    
+                    <!--Delete confirmation pop-up----->
+                    <!-- <a href="{{ route('postDelete' , ['post_id' => $post->id]) }}">Delete</a> ----without delete confirmation pop-up this one line code is enough for deleting post-->
+                    <!-- href="{{ route('postDelete' , ['post_id' => $post->id]) }}" -->
+                    <!-- href="javascript:confirm('Are you sure you want to delete?')" -->
+                    <!-- data-post-id="{{ $post->id }}" -->
+                    <a
+                      class="delete-post-pop-up"
+                      data-url-delete="{{ route('postDelete' , ['post_id' => $post->id]) }}"
+                      href="#"
+                    >
+                      Delete
+                    </a> <!--go to public/src/js/app.js-------->
                   @else                  
                     <a href="#" class="like">{{ Auth::user()->likes()->where('post_id' , $post->id)->first()  ?  Auth::user()->likes()->where('post_id' , $post->id)->first()->like == 1 ? 'you like this post' : 'Like'  : 'Like' }} </a> <!--go to app.js----->
                     <a href="#" class="like">{{ Auth::user()->likes()->where('post_id' , $post->id)->first()  ?  Auth::user()->likes()->where('post_id' , $post->id)->first()->like == 0 ? 'you don\'t like this post' : 'Dislike'  : 'Dislike' }}</a>
@@ -70,7 +82,7 @@ dashboard
     </div>
 </section>
 
-
+<!--Edit Modal----->
 <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal"> <!--id =edit-modal   this id i have used in app.js file------->
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -100,11 +112,35 @@ dashboard
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!--Delete Pop-Up Modal-------->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="delete-modal"> <!--id ="delete-modal"   this id i have used in app.js file------->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirm Delete</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this post?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="modal-confirm-delete">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script>
   var token = '{{ Session::token() }}';
   var urlEdit = '{{ route('edit') }}'; /////chack app.js file and edit route
-  var urlLike ='{{ route('like') }}';
+  var urlLike = '{{ route('like') }}';
+  // var urlDelete = '{{ route('postDelete', ['post_id' => '#']) }}';
 </script>
 
 @endsection 
+
+ 

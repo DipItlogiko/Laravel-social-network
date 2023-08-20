@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
- 
+
 use App\Models\Userdip2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 
 class UserController extends Controller
-{ 
+{
 
     ////_____postSignUp__////
     public function postSignUp(Request $request){
@@ -44,7 +44,7 @@ class UserController extends Controller
     public function postSignIn(Request $request){
 
         $this->validate($request , [
-            'email' => 'required', /////this email is my Signin form input field email 
+            'email' => 'required', /////this email is my Signin form input field email
             'password' => 'required'
         ]);
 
@@ -72,13 +72,18 @@ class UserController extends Controller
 
     ////__Account Save Post__////
     public function postSaveAccount(Request $request){
+        // dd($request->all());
+        // dd($request->only(['_token', 'first_name']));
+        // dd($request->except(['_token', 'first_name']));
+
         //__validation__//
-        $this->validate($request ,[
-            'first_name' => 'required|max:120'
+        $validated = $request->validate([
+            'first_name' => 'max:120',
+            'image' => 'image|mimes:jpeg,jpg,png,gif,svg|max:2048'
         ]);
 
         $user = Auth::user();
-        $user->first_name = $request['first_name'];
+        $user->first_name = $validated['first_name'];
         $user->update();
 
         $file = $request->file('image'); //////image is my account.blade.php files input name that's why i have written this name in the file() function
@@ -92,8 +97,17 @@ class UserController extends Controller
             Storage::disk('local')->put($filename , File::get($file)); ///////go config folder filesystems.php
         }
 
+        ////below code is more preferable then above code .but here i got one porblem in this way i am unable to upload user picture...  
+        // if ($request->hasFile('image') && $request->file('image')->isValid()) {
+        //     $file = $request->file('image'); //////image is my account.blade.php files input name that's why i have written this name in the file() function
+        //     $file->storeAs('', $user->id . '.' . $file->extension());
+    
+        // }
+
         return redirect()->route('account');
     }
+
+
 
     ////__UserImage__////
     public function getUserImage($filename){

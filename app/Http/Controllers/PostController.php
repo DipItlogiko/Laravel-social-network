@@ -66,16 +66,17 @@ class PostController extends Controller
     }
 
 
-    public function getDeletePost( $post_id ) {
-        $post = Post::where("id" , $post_id)->first();
-
-        if(Auth::user() != $post-> user){
+    public function getDeletePost(Request $request ) {
+        $post = Post::find($request['post_id']);
+           
+        if(Auth::user() != $post->user){
             return redirect()->back();
         }
 
-        $post-> delete();
+        $post->delete();
 
         return redirect()->route('dashboard')->with(['message' => 'Successfully Deleted!!!']);
+        // return response()->json(['message' => 'Successfully Deleted!!!']);
     }
 
 
@@ -124,3 +125,9 @@ class PostController extends Controller
         return null;
     }
 }
+
+
+
+
+
+// <a class="delete-post-pop-up" href="#">Delete</a> <!--go to public/src/js/app.js-------->

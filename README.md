@@ -20,3 +20,5 @@ the appropriate timezone identifier for your location. You can find a list of su
 Here i am just used bootstrap class in message.blade.php 
 
 * Fix wrong profile image with changing first name.
+
+* Add delete confirmation pop-up.
