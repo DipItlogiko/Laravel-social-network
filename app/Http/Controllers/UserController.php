@@ -104,7 +104,7 @@ class UserController extends Controller
     
         // }
 
-        return redirect()->route('account');
+        return redirect()->route('account')->with(['message' => 'Account Save Successfully!!!']);
     }
 
 

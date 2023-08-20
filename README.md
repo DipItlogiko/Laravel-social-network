@@ -22,3 +22,5 @@ Here i am just used bootstrap class in message.blade.php
 * Fix wrong profile image with changing first name.
 
 * Add delete confirmation pop-up.
+
+* Add notification bar in account.blade.php
