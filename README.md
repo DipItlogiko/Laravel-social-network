@@ -28,3 +28,6 @@
 * fix user upload image extension(".jpg",".png",".jpeg"........) here i am storing same image extension which ever user submit
 
   before fix this issue we were converting  the user upload image extension to ".jpg"
+
+
+* simplify PostController.php (postLikePost)  

@@ -80,50 +80,117 @@ class PostController extends Controller
     }
 
 
-    public function postLikePost(Request $request)
-    {
-        $post_id = $request['POST_ID'];    //////POST_ID it comes from app.js
+//     public function postLikePost(Request $request)
+//     {
+//         $post_id = $request['POST_ID'];    //////POST_ID it comes from app.js
 
-        $is_Like = $request['islike'] === 'true'; ////islike is come from app.js
+//         $is_Like = $request['islike'] === 'true'; ////islike is come from app.js
 
-        $update = false;
+//         $update = false;
 
-        $post = Post::find($post_id);
+//         $post = Post::find($post_id);
 
-        if (!$post ) {
-            return null;
-        }
+//         if (!$post ) {
+//             return null;
+//         }
 
-///////////// i don't understand here---------------------------------------
-        $user = Auth::user(); // Auth::user() is equal to $request->user()
-        $like = $user->likes()->where('post_id' , $post_id)->first(); ///// this likes() is my relation which i created in to the models file
-///////////-----------------------------------------------------------------
-        if($like){
-            $already_like = $like -> like; //////the  like is my likes table fild name
-            $update = true;
+// ///////////// i don't understand here---------------------------------------
+//         $user = Auth::user(); // Auth::user() is equal to $request->user()
+//         $like = $user->likes()->where('post_id' , $post_id)->first(); ///// this likes() is my relation which i created in to the models file
+// ///////////-----------------------------------------------------------------
+//         if($like){
+//             $already_like = $like -> like; //////the  like is my likes table fild name
+//             $update = true;
 
-            if($already_like == $is_Like) {
-                $like->delete();
-                return null;
-            }
-        } else {
-            $like = new Like();
-        }
+//             if($already_like == $is_Like) {
+//                 $like->delete();
+//                 return null;
+//             }
+//         } else {
+//             $like = new Like();
+//         }
 
-        $like->like = $is_Like;
+//         $like->like = $is_Like;
 
-        $like->user_id = $user->id;
+//         $like->user_id = $user->id;
 
-        $like->post_id = $post->id;
+//         $like->post_id = $post->id;
 
-        if($update) {
-            $like->update();
-        } else {
-            $like->save();
-        }
+//         if($update) {
+//             $like->update();
+//         } else {
+//             $like->save();
+//         }
 
-        return null;
+//         return null;
+//     }
+
+
+// public function postLikePost(Request $request)
+// {
+//     $post_id = $request['POST_ID'];
+//     $is_Like = $request['islike'] === 'true';
+//     $update = false;
+    
+//     $post = Post::find($post_id);
+//     if (!$post) {
+//         return null;
+//     }
+
+//     $user = Auth::user();
+//     $like = $user->likes()->where('post_id', $post_id)->first();
+    
+//     if ($like) {
+//         $already_like = $like->like;
+//         $update = true;
+        
+//         if ($already_like == $is_Like) {
+//             $like->delete();
+//         }
+//     } elseif ($is_Like) {
+//         $like = new Like();
+//         $like->like = true;
+//         $like->user_id = $user->id;
+//         $like->post_id = $post->id;
+//         $like->save();
+//     }
+    
+//     if ($update && !$is_Like) {
+//         $like->update();
+//     }
+    
+//     return null;
+// }
+
+public function postLikePost(Request $request)
+{
+    $post_id = $request->input('POST_ID');
+    $is_Like = $request->input('islike') === 'true';
+
+    $post = Post::find($post_id);
+
+    if (!$post) {
+        return null;  
     }
+
+    $user = Auth::user();
+    $like = $user->likes()->where('post_id', $post_id)->first();
+    dd($like); 
+    if ($like && $like->like == $is_Like) {
+        $like->delete();
+    } elseif (!$like) {
+        $like = new Like();
+        $like->like = $is_Like;
+        $like->user_id = $user->id;
+        $like->post_id = $post->id;
+        $like->save();
+    }
+
+    return null;  
+}
+
+
+
 }
 
 
