@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
+ 
 
 class UserController extends Controller
 {
@@ -78,29 +79,48 @@ class UserController extends Controller
 
         //__validation__//
         $validated = $request->validate([
-            'first_name' => 'max:120',
-            'image' => 'image|mimes:jpeg,jpg,png,gif,svg|max:2048'
+            'first_name' => 'string|max:120',
+            'image' => 'image|mimes:jpeg,jpg,png,gif,svg|max:2048',
         ]);
 
         $user = Auth::user();
-        $user->first_name = $validated['first_name'];
+
+        if ($validated['first_name']) {
+            $user->first_name = $validated['first_name'];
+        }
+
+        if ($validated['image']) {
+            // Save the extension to the user's image_extension attribute
+            // Now, move the uploaded image to a designated location
+            //$user->image_extension = $validated['image']->storeAs('', $validated['image']->getClientOriginalName()); ////storeAs() function return file path  ////by using getClientOriginalName() i will get original image name of which image will user upload 
+            
+            $user->image_extension = $validated['image']->store(); //////store() function generate a rendom filename but file txtension will be same  
+        }
+
         $user->update();
 
-        $file = $request->file('image'); //////image is my account.blade.php files input name that's why i have written this name in the file() function
+        //$file = $request->file('image'); //////image is my account.blade.php files input name that's why i have written this name in the file() function
 
         /////if we generate our filename with user first name then we will face a problem(i have written the problem in account.blade.php) 
         ////$filename = $request['first_name'] . '-' . $user->id . '.jpg'; /////my filename will be $request['first_name'] and it's mean '-'  space and $user->id and my file must be a jpg file and that's why i include '.jpg' here 
         
-        $filename = $user->id . '.jpg';////Use user's ID for filename (it will solve your above problem) 
+        //$filename = $user->id . '.jpg';////Use user's ID for filename (it will solve your above problem) 
+        
+        // if ($file) {             
+        //     // $filename = $user->id . '.' . $file->getClientOriginalExtension();
+        //     Storage::disk('local')->put($filename, File::get($file)); ////go config folder filesystem.php
+        // }
 
-        if ($file) {
-            Storage::disk('local')->put($filename , File::get($file)); ///////go config folder filesystems.php
-        }
-
+        // if ($file) {
+        //     $extension = $file->getClientOriginalExtension();
+        //     $filename = $user->id . '.' . $extension;
+        //     Storage::disk('local')->put($filename, File::get($file));
+        // }
+        
         ////below code is more preferable then above code .but here i got one porblem in this way i am unable to upload user picture...  
         // if ($request->hasFile('image') && $request->file('image')->isValid()) {
         //     $file = $request->file('image'); //////image is my account.blade.php files input name that's why i have written this name in the file() function
-        //     $file->storeAs('', $user->id . '.' . $file->extension());
+        //     $file->storeAs('', $user->id . '.' . $file->getClientOriginalExtension());
     
         // }
 
@@ -112,6 +132,11 @@ class UserController extends Controller
     ////__UserImage__////
     public function getUserImage($filename){
         $file = Storage::disk('local')->get($filename);
-        return new Response($file , 200);
+        return new Response($file , 200); 
     }
 }
+
+
+
+
+

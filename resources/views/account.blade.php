@@ -36,12 +36,21 @@
         </section>
     @endif -->
 
-    @if (Storage::disk('local')->has($user->id . '.jpg'))
-        <section class="row new-post">
-            <div class="col-md-6 col-md-offset-3">
-                <img src="{{ route('accountImage', ['filename' => $user->id . '.jpg']) }}" alt="" class="img-responsive">
-            </div>
-        </section>
-   @endif
+    <section class="row new-post">
+    <div class="col-md-6 col-md-offset-3">
+        @if ($user->image_extension)          {{---$user->image_extension is comes from UserController.php------}}
+            <img
+                alt="User Image"
+                class="img-responsive"
+                src="{{ route('accountImage', ['filename' => $user->image_extension]) }}"
+            />
+        @else
+            No profile image available
+        @endif
+    </div>
+</section>
+
 
 @endsection
+
+

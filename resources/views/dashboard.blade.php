@@ -52,7 +52,7 @@ dashboard
 
                 <div class="interaction">
                    
-                  @if(Auth::user() == $post->user)                    
+                  @if(Auth::id() == $post->user_id)                    
                     <a href="#" class="edit">Edit</a>  <!--For make this edit button workable i have created a new folder in public/src/js and i have added a jquery cdn in master.blade.php file and i also have written this public/src/js script in master.blade.php------->
                     
                     <!--Delete confirmation pop-up----->
